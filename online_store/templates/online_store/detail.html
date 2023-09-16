@@ -1,0 +1,19 @@
+{% extends "online_store/base.html" %}
+{% block content %}
+<td><img style="margin-top:10%; height: 180px;" class="rounded-circle" src="{{item.image.url}}" alt=""></td>
+
+<h1 style="margin-top:5%; width:100vh;">{{ item.name }}</h1>
+<br>
+
+<a style="margin-top:5%; width:100vh;">Price: {{ item.price }}</a>
+<br>
+<br>
+<a style="margin-top:5%; width:100vh;">Quantity in stock: {{ item.quantity }}</a>
+<br>
+<br>
+
+<a style="margin-top:5%; width:100vh;">Description: {{ item.description }}</a>
+
+
+
+{% endblock content %}

@@ -1,0 +1,43 @@
+{% extends "online_store/base.html" %}
+
+
+{% block content %}
+
+<main class="px-1 text-center">
+    <br>
+    <br>
+    <br>
+
+    <p class="lead">
+        <h3> Welcome to the UPs minimart, here are the items in stock: </h3>
+        <h3> Click on the title to find out more </h3>
+
+        <br>
+        <br>
+        <br>
+        {% if item_list %}
+            <div id='products' class="col-lg-9 mx-auto">
+                <div class="row mx-auto">
+                    {% for item in item_list %}
+                    <div class="card mx-auto mb-3" id={{item.id}} style="width: 18rem;">
+                        <img class="card-img-top" src="{{item.image.url}}" alt="Card image cap">
+                        <div class="card-body">
+                            <a class="card-title"  href="/items/{{ item.id }}/" >{{item.name}}</a>
+                            <p class="card-text"><b>{{item.price}}</b></p>
+                        </div>
+                        <div class="card-footer p-0 no-gutters">
+                        </div>
+    
+                    </div>
+                    {% endfor %}
+            
+
+        {% else %}
+            <p>No items are available.</p>
+        {% endif %}
+    </p>
+  </main>
+
+
+
+{% endblock content %}
