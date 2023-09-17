@@ -127,3 +127,43 @@ MEDIA_ROOT = BASE_DIR / 'uploads'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Create a LOGGING dictionary
+LOGGING = {
+    # Use v1 of the logging config schema
+    'version': 1,
+    # Continue to use existing loggers
+    'disable_existing_loggers': False,
+    'formatters': {
+    'verbose': {
+        'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+        'style': '{',
+        },
+    },
+    # Create a log handler that prints logs to the terminal
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            # 'formatter': 'verbose',
+        },
+        # Add a handler to write logs to a file
+        'file': {
+            # Use the FileHandler class
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(os.getcwd(), "online_store","django.log")
+        },
+    },
+    # Define the root logger's settings
+    'root': {
+        'handlers': ['console', 'file'],
+        'level': 'INFO',
+    },
+    # Define the django log module's settings
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': False,
+        },
+    },
+}
