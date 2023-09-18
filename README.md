@@ -22,8 +22,15 @@ Lastly, admin account can also view the logs in the admin page under the log ent
 3. Explain the following in a README file.
 a. Steps required to run your application.(Please provide instructions on how to run your source code locally on our laptop in the README file.)
 
+
 ## Setup (for Mac)
-Change Directory to the root of this repository.
+Change Directory (cd) to the root of this repository.
+
+Install virtualenv if not already on your laptop (assuming pip is already installed)
+
+```
+pip install virtualenv
+```
 
 Create virtual environment
 
@@ -41,9 +48,14 @@ Install dependencies
 pip install -r requirements.txt
 ```
 
-Start the developmental server
+Start the developmental server (Assumption is that this portion does not require a production ready server)
 ```
 python manage.py runserver
+```
+
+Website should then be accessible at:
+```
+http://localhost:8000/
 ```
 
 ## Setup (for Windows)
@@ -64,8 +76,128 @@ Start the server
 py manage.py runserver
 ```
 
+
 b. Explain how you would deploy this app on a cloud environment (Bonus: How you would
 do this with serverless components).
+
+To deploy on an AWS EC2 (Ubuntu) instance:
+
+-Assuming one is able to set it up and SSH into it,
+
+git clone and change Directory (cd) to the root of this repository.
+
+install binaries if not already present:
+```
+sudo apt-get update && sudo apt-get upgrade
+sudo apt-get install python3-pip
+pip install virtualenv
+```
+
+Create a virtual environment and activate it
+```
+virtualenv venv
+source venv/bin/activate
+```
+
+Install dependencies 
+```
+pip install -r requirements.txt
+```
+
+Update the ALLOWED_HOSTS in settings.py file with public IP address of the EC2 instance, e.g.
+```
+ALLOWED_HOSTS = ["88.88.88.88"]
+```
+
+Create security rules in the AWS config settings to allow TCP incoming traffic on ports 80
+
+Next, we would use gunicorn and nginx to have a production-ready server:
+
+First nginx is installed:
+```
+sudo apt install nginx
+```
+
+Next we can create a socket file for gunicorn:
+```
+sudo nano /etc/systemd/system/gunicorn.socket
+```
+
+Adding the following content to it:
+```
+[Unit]
+Description=gunicorn socket
+
+[Socket]
+ListenStream=/run/gunicorn.sock
+
+[Install]
+WantedBy=sockets.target
+```
+
+Next we can create the service file (config) for gunicorn. 
+```
+sudo nano /etc/systemd/system/gunicorn.service
+```
+
+change the User, WorkingDirectory, ExecStart if need be
+```
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/website_for_TAP
+ExecStart=/home/ubuntu/venv/bin/gunicorn --workers 3 --bind unix:/run/gunicorn.sock website_for_TAP.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Start and enable the guicorn service
+```
+sudo systemctl start gunicorn.socket
+sudo systemctl enable gunicorn.socket
+```
+
+Next we can create the configuration file for Nginx:
+```
+sudo nano /etc/nginx/sites-available/website_for_TAP
+```
+
+change the IP address accordingly
+
+```
+server {
+    listen 80;
+    server_name <IP address>;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        root /home/ubuntu/website_for_TAP;
+    }
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/run/gunicorn.sock;
+    }
+}
+```
+
+create a symbolic link:
+```
+sudo ln -s /etc/nginx/sites-available/website_for_TAP /etc/nginx/sites-enabled/
+```
+
+Finally, restart nginx:
+```
+sudo systemctl restart nginx
+```
+
+If all works well, the website should be accessible on the IP address and port 80 via HTTP
 
 c. Explain security hardening techniques on a cloud environment.
 
