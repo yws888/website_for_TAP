@@ -128,11 +128,8 @@ MEDIA_ROOT = BASE_DIR / 'uploads'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Create a LOGGING dictionary
 LOGGING = {
-    # Use v1 of the logging config schema
     'version': 1,
-    # Continue to use existing loggers
     'disable_existing_loggers': False,
     'formatters': {
     'verbose': {
