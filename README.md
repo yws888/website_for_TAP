@@ -76,6 +76,7 @@ Start the server
 py manage.py runserver
 ```
 
+For the admin page, user is admin and password is admin (user/password pair created for convenience of access only)
 
 b. Explain how you would deploy this app on a cloud environment (Bonus: How you would
 do this with serverless components).
@@ -201,10 +202,18 @@ If all works well, the website should be accessible on the IP address and port 8
 
 c. Explain security hardening techniques on a cloud environment.
 
-“input validation”: 
-“logging”:
+To resolve the issues of 'logging' mentioned in the writeup, the logs are stored in a file to see if there are any unexpected accesses, logins to admin accounts or CRUD operations. 
 
-You may include a section with the assumptions, interpretations you have made about the requirements above or notes on your architecture decisions.
+To resolve the issue of 'input validation' mentioned in the writeup, Django's admin site is secure by default and hence is generally safe against known attacks such as SQL injection
+
+Encrypting data in transit and at rest: Using HTTPS instead of HTTP so that attackers cannot eavesdrop packets which may contain login credentials, and encrypting credentials in the database; not storing the passwords as plaintext
+
+-Allow admin access only from VPN IP (or IP-range where legitimate traffic is expected to come from). For Django, this requires a middleware that checks IP and request path and rejects all non-VPN paths to /admin
+
+-Create an admin honeypot (https://github.com/jamesturk/django-honeypot) and redirect the admin link elsewhere. IPs that often pop up can then be blocked.
+
+-Adding 2FA & Captcha to admin page login for further authentication
+
 
 
 Assumptions/Interpretations:
@@ -216,9 +225,6 @@ Notes on architecture decisions:
 
 ![Alt text](<Screenshot 2023-09-18 at 2.55.37 pm.png>)
 
-
-Please send us a link to your repository when you complete your assessment via this form:
-https://go.gov.sg/csgdaretap2024
 
 Grading Criteria / Matric
 You will be graded on:
