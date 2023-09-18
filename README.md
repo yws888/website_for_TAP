@@ -1,18 +1,23 @@
 # website_for_TAP
 For the DARE TAP assessment
 
+
 Technical Requirements:
 1. Usage of ORM:
 
 This site is built with Django, which implements an Object-relational Mapper (ORM) that maps Python objects/classes (code) to relational database (SQL is used here) statements. The code for these objects is located in the models.py file.
 
+
+
 2. Logging of all CRUD actions.
 
 There are 3 places you can see logs. The first is the terminal (when the server is running) where the logs are printed in this format:
 
-The second is a django.log file located in the online_store directory which would be created when logs are generated. 
+The second is a django.log file located in the online_store directory which would be created when logs are generated. These logs log the HTTP requests made to API endpoints
 
 Lastly, admin account can also view the logs in the admin page under the log entries section. Here only Create (addition), update (Change) and Delete (Deletion) actions are logged.
+
+
 
 3. Explain the following in a README file.
 a. Steps required to run your application.(Please provide instructions on how to run your source code locally on our laptop in the README file.)
