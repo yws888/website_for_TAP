@@ -76,13 +76,12 @@ py manage.py runserver
 For the admin page, user is admin and password is admin (user/password pair created for convenience of access only)
 
 
-### b. Explain how you would deploy this app on a cloud environment (Bonus: How you would
-do this with serverless components).
+### b. Explain how you would deploy this app on a cloud environment (Bonus: How you would do this with serverless components).
 
 
-To deploy on an AWS EC2 (Ubuntu) instance:
+To deploy on an AWS EC2 (Ubuntu) instance (IaaS):
 
--Assuming one is able to set it up and SSH into it,
+-Assumption: one has access to an AWS EC2 instance, is able to set it up and SSH into it,
 
 git clone and change Directory (cd) to the root of this repository.
 
