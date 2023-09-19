@@ -215,24 +215,20 @@ Encrypting data in transit and at rest: Using HTTPS instead of HTTP so that atta
 
 -Adding 2FA & Captcha to admin page login for further authentication
 
+- Setting inbound traffic rules to only allow traffic from specific ports and IP addresses
+
+- Principle of Least Privilege: Only allow minimal privileges for accounts which require them in cloud configuration settings
 
 
 Assumptions/Interpretations:
 
--
+- Non-CRUD actions can be logged
+- There is no performance limitation hence collectstatic was used to collect static files for nginx
 
 Notes on architecture decisions:
--I have used the Django framework for this website, which follows a Model-View-Template architecture. The data interface  is in the models (models.py), app business logic is in the views (views.py), and output is in the templates (html files).
+
+
+- I have used the Django framework for this website, which follows a Model-View-Template architecture. The data interface  is in the models (models.py), app business logic is in the views (views.py), and output is in the templates (html files).
 
 ![Alt text](<Screenshot 2023-09-18 at 2.55.37 pm.png>)
 
-
-Grading Criteria / Matric
-You will be graded on:
-• Readability and code cleanliness
-• Good coding practices
-• Code structure/design, e.g. modularity, testability
-• User Experience
-• Git best practices (Gitflow)
-• Documentation
-• Ease of running source code without external troubleshooting
