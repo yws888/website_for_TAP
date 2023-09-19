@@ -4,7 +4,7 @@
 Technical Requirements:
 ## 1. Usage of ORM:
 
-This site is built with Django, which implements an Object-relational Mapper (ORM) that maps Python objects/classes (code) to relational database (SQL is used here) statements. The code for these objects is located in the models.py file.
+This site is built with Django, which implements an Object-relational Mapper (ORM) that maps Python objects/classes (code) to relational database (SQLite is used here) statements. The code for these objects is located in the models.py file.
 
 
 
@@ -223,7 +223,8 @@ Encrypting data in transit and at rest: Using HTTPS instead of HTTP so that atta
 Assumptions/Interpretations:
 
 - Non-CRUD actions can be logged
-- There is no performance limitation hence collectstatic was used to collect static files for nginx
+- There is no memory size limitation hence collectstatic was used to collect static files for nginx
+- Add to cart features are not required as payment options is not required, but can be added in future if needed
 
 Notes on architecture decisions:
 
