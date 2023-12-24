@@ -103,9 +103,9 @@ Install dependencies
 pip install -r requirements.txt
 ```
 
-Update the ALLOWED_HOSTS in settings.py file with public IP address of the EC2 instance, e.g.
+Check that the ALLOWED_HOSTS in settings.py file is set to allow all IPs to host this server
 ```
-ALLOWED_HOSTS = ["88.88.88.88"]
+ALLOWED_HOSTS = ["*"]
 ```
 
 Create security rules in the AWS config settings to allow TCP incoming traffic on ports 80
